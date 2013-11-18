@@ -3,7 +3,6 @@
 namespace NemesisCSV\Parser\Tests\Units;
 
 use NemesisCSV\Parser\StringParser as Parser;
-use NemesisCSV\Parser\Exception\StopProcessingException;
 use mageekguy\atoum;
 
 class StringParser extends atoum\test
@@ -64,13 +63,13 @@ EOF;
                 ->isEqualTo(26)
         ;
 
-        // test with StopProcessingException
+        // test stop processing
         $parser = new Parser;
         $stack = array();
         $parser
             ->addProcessor(function($row, $rowNumber) {
                 if ($rowNumber === 0) {
-                    throw new StopProcessingException();
+                    return;
                 }
 
                 return $row;
@@ -132,10 +131,10 @@ EOF;
                 ->isEqualTo(0)
         ;
 
-        // test with StopProcessingException
+        // test stop processing
         $parser->addProcessor(function($row, $rowNumber) {
             if ($rowNumber === 0) {
-                throw new StopProcessingException();
+                return;
             }
 
             return $row;

@@ -2,8 +2,6 @@
 
 namespace NemesisCSV\Parser\Processor;
 
-use NemesisCSV\Parser\Exception\StopProcessingException;
-
 class Processors
 {
     /**
@@ -29,7 +27,7 @@ class Processors
     public static function noHeadline(array $row, $rowNumber)
     {
         if (0 === $rowNumber) {
-            throw new StopProcessingException;
+            return null;
         }
 
         return $row;

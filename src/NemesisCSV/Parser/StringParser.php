@@ -47,12 +47,8 @@ class StringParser extends AbstractParser
         $rows = str_getcsv($string, "\n");
 
         foreach($rows as $rowNumber => $row) {
-            try {
-                $row = $this->parseRow($row);
-                $this->processRow($row, $rowNumber);
-            } catch (StopProcessingException $e) {
-                continue;
-            }
+            $row = $this->parseRow($row);
+            $this->processRow($row, $rowNumber);
         }
     }
 
@@ -70,11 +66,11 @@ class StringParser extends AbstractParser
         $rows = str_getcsv($string, "\n");
 
         foreach($rows as $rowNumber => $row) {
-            try {
-                $row = $this->parseRow($row);
-                $dump[] = $this->processRow($row, $rowNumber);
-            } catch (StopProcessingException $e) {
-                continue;
+            $row = $this->parseRow($row);
+            $row = $this->processRow($row, $rowNumber);
+
+            if (is_array($row)) {
+                $dump[] = $row;
             }
         }
 

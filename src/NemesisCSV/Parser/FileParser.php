@@ -49,11 +49,7 @@ class FileParser extends AbstractParser
         $resource = $this->initializeResource($resource);
 
         foreach ($resource as $rowNumber => $row) {
-            try {
-                $this->processRow($row, $rowNumber);
-            } catch (StopProcessingException $e) {
-                continue;
-            }
+            $this->processRow($row, $rowNumber);
         }
     }
 
@@ -69,10 +65,10 @@ class FileParser extends AbstractParser
         $resource = $this->initializeResource($resource);
 
         foreach ($resource as $rowNumber => $row) {
-            try {
-                $dump[] = $this->processRow($row, $rowNumber);
-            } catch (StopProcessingException $e) {
-                continue;
+            $row = $this->processRow($row, $rowNumber);
+
+            if (is_array($row)) {
+                $dump[] = $row;
             }
         }
 

@@ -3,7 +3,6 @@
 namespace NemesisCSV\Parser\Tests\Units;
 
 use NemesisCSV\Parser\FileParser as Parser;
-use NemesisCSV\Parser\Exception\StopProcessingException;
 use mageekguy\atoum;
 
 class FileParser extends atoum\test
@@ -28,19 +27,6 @@ class FileParser extends atoum\test
                 ->isInstanceOf('\InvalidArgumentException')
             ->exception(function() use ($parser) {
                 $parser->dump('file-not-found.csv');
-            })
-                ->isInstanceOf('\RuntimeException')
-        ;
-    }
-
-    public function testProcessRow()
-    {
-        $parser = new Parser(['file' => $this->csvfile]);
-        $parser->addProcessor(function(){});
-
-        $this
-            ->exception(function() use ($parser) {
-                $parser->parse();
             })
                 ->isInstanceOf('\RuntimeException')
         ;
@@ -106,13 +92,13 @@ class FileParser extends atoum\test
                 ->isEqualTo(26)
         ;
 
-        // test with StopProcessingException
+        // test stop processing
         $parser = new Parser;
         $stack = array();
         $parser
             ->addProcessor(function($row, $rowNumber) {
                 if ($rowNumber === 0) {
-                    throw new StopProcessingException();
+                    return null;
                 }
 
                 return $row;
@@ -174,10 +160,10 @@ class FileParser extends atoum\test
                 ->isEqualTo(0)
         ;
 
-        // test with StopProcessingException
+        // test stop processing
         $parser->addProcessor(function($row, $rowNumber) {
             if ($rowNumber === 0) {
-                throw new StopProcessingException();
+                return;
             }
 
             return $row;

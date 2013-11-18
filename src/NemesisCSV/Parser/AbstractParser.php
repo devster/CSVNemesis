@@ -75,9 +75,7 @@ abstract class AbstractParser
             $row = call_user_func_array($processor, [$row, $rowNumber]);
 
             if (! is_array($row)) {
-                throw new \RuntimeException(
-                    'Processor must return an array, if you want to exclude a row, you can throw a StopProcessingException'
-                );
+                return null;
             }
         }
 
