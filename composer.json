@@ -1,0 +1,23 @@
+{
+    "name": "devster/nemesis-csv",
+    "description": "Micro PHP library for benchmarking",
+    "keywords": ["benchmark", "bench", "library", "micro"],
+    "homepage": "https://github.com/devster/ubench",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeremy Perret",
+            "email": "jeremy@devster.org"
+        }
+    ],
+
+    "autoload": {
+        "psr-0": { "NemesisCSV": "src/" }
+    },
+
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/options-resolver": "2.4.*@dev"
+    }
+}
